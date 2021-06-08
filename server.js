@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
 const { animals } = require('./data/animals');
 
 
@@ -36,6 +38,11 @@ function filterByQuery(query, animalsArray) {
     return result;
   }
 
+  function createNEwAnimal(body, animalsArray) {
+    console.log(body);
+    return body;
+  }
+
   app.get('/api/animals', (req, res) => {
     let results = animals;
     if (req.query) {
@@ -51,6 +58,11 @@ function filterByQuery(query, animalsArray) {
     } else {
       res.send(404);
     }
+  });
+
+  app.post('/api/animals', (req, res) => {
+    console.log(req.body);
+    res.json(req.body);
   });
 
 app.listen(3001, () => {
